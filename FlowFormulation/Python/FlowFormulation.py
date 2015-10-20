@@ -41,31 +41,38 @@ graphNodes = G.nodes()
 importanceContributionDictionary = {}
 
 for gnode in graphNodes:
+   #calculate outdegree for each node
    nodeOutDegree = G.out_degree(gnode)
+   #if outdegree is 0, importance contribution is 0 else 1/outdegree
    if nodeOutDegree == 0 :
       importanceContributionDictionary[gnode] = 0.0
    else:
       importanceContributionDictionary[gnode] = 1.0/nodeOutDegree
 
+#length of graphNodes
 graphNodesLength = len(graphNodes)
+#First create empty equation matrix
 equationMatrix = np.zeros((graphNodesLength,graphNodesLength))
 
 i = 0
+#replace zeroes with coefficients in equationMatrix
 for gnode in graphNodes:
    equationMatrix[i,i] = 1.0
    nodeInnerEdges = G.in_edges(gnode)
-   if len(nodeInnerEdges) == 0:
-      sys.exit("This cannot handle Dead Ends!!!")
    for inLinkEdgeNode in [linkEdge[0] for linkEdge in nodeInnerEdges]:
       equationMatrix[i,graphNodes.index(inLinkEdgeNode)] = -1.0*importanceContributionDictionary[inLinkEdgeNode]
    i = i+1
 
+#add sum of ranks equals to one equation
 finalCoefficientMatrix = np.vstack([equationMatrix,np.ones(graphNodesLength)])
 
+#Y coefficients correspond to zeroes for all equation except the summation of pagerank equation which is 1
 Y = np.hstack([np.zeros(graphNodesLength),[1.0]])
 
+#add bias as constant term in equations
 xWithBias = np.column_stack((finalCoefficientMatrix,np.ones(finalCoefficientMatrix.shape[0])))
 
+#solve system of equations with least squares method and get the results
 dictionary = dict(zip(graphNodes, np.linalg.lstsq(xWithBias, Y)[0]))
 
 print dictionary
