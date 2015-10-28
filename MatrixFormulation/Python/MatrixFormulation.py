@@ -5,7 +5,7 @@ import sys
 
 file="../Graph/directedEdges.csv"
 
-beta=0.8
+beta=0.9
 
 # create networkx graph
 G=nx.DiGraph()
@@ -57,6 +57,7 @@ for i in range(0, 1000):
      tempPageRanks = np.dot(stochasticMatrix,pageRanks)
      tempPageRanks = tempPageRanks/tempPageRanks.sum()
      if np.absolute(pageRanks - tempPageRanks).sum() < 0.000001:
+        pageRanks = tempPageRanks
         break
      else:
         pageRanks = tempPageRanks
