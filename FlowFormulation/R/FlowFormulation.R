@@ -42,4 +42,4 @@ model <- lm(Y ~ finalcoefficientMatrix)
 #Printing Vertices First
 print(V(directedEdges.network)$name)
 #Printing PageRanks of above vertices
-print(summary(model)$coefficients[c(2:noofvertices+1)])
+print(summary(model)$coefficients[1:noofvertices+1])
