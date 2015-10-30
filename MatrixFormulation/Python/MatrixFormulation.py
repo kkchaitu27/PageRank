@@ -46,7 +46,7 @@ for gnode in graphNodes:
 stochasticMatrix = beta*stochasticMatrix + (1-beta)/graphNodesLength*np.ones((graphNodesLength,graphNodesLength))
 
 #initialize random page ranks for each node
-pageRanks = np.random.random_sample((graphNodesLength,))
+pageRanks = 1.0/graphNodesLength*np.ones((graphNodesLength,))
 
 #sum of pageranks must be one
 pageRanks = pageRanks/pageRanks.sum()
@@ -55,7 +55,8 @@ pageRanks = pageRanks/pageRanks.sum()
 #Iterative Calculation for Pageranks
 for i in range(0, 1000):
      tempPageRanks = np.dot(stochasticMatrix,pageRanks)
-     tempPageRanks = tempPageRanks/tempPageRanks.sum()
+     rankSum = tempPageRanks.sum()
+     tempPageRanks = tempPageRanks + (1-rankSum)/graphNodesLength
      if np.absolute(pageRanks - tempPageRanks).sum() < 0.000001:
         pageRanks = tempPageRanks
         break

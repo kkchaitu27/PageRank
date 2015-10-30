@@ -24,5 +24,5 @@ def draw_graph(file):
     # show graph
     plt.show()
 
-draw_graph("directedEdges.tsv")
+draw_graph("directedEdges.csv")
 
