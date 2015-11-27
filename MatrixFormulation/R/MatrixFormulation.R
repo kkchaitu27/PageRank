@@ -1,6 +1,6 @@
 #load igraph package for graph analysis
 require(igraph)
-
+#Probability to visit a random link
 beta = 0.9
 #load directed edges from the file
 directedEdges <- read.csv("../Graph/directedEdges.csv", header=FALSE)
