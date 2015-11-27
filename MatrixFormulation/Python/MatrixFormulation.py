@@ -3,8 +3,10 @@ import networkx as nx
 import csv
 import sys
 
+#Data
 file="../Graph/directedEdges.csv"
 
+#Probability to visit a random link
 beta=0.9
 
 # create networkx graph
